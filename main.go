@@ -22,8 +22,8 @@ type level struct{
 }
 
 func main() {
-    urlFlag := flag.String("url", "https://www.avemaria.edu", "the url to build sitemap")
-    maxDepth := flag.Int("depth", 20, "the maximum number of link levels to recurse.")
+    urlFlag := flag.String("url", "https://www.my.avemaria.edu", "the sitemap source url")
+    maxDepth := flag.Int("depth", 10, "the maximum number of link levels to recurse.")
     verbose := flag.Bool("v", false, "Print verbose output")
     flag.Parse()
 

@@ -30,9 +30,9 @@ I enjoyed learning about the go programming languages and practicing some more c
 
 ![myave_sitemap](example/myave.svg)
 
-```./sitemap -url="https://www.avemaria.edu" -depth=10```
+```./sitemap -url="https://www.acm.org" -depth=2```
 
-![fhi_sitemap](example/ave.png)
+![fhi_sitemap](example/acm.png)
 
 ## Fixes
 
