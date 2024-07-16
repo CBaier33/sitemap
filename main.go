@@ -24,33 +24,38 @@ type level struct{
 func main() {
     urlFlag := flag.String("url", "https://www.avemaria.edu", "the url to build sitemap")
     maxDepth := flag.Int("depth", 20, "the maximum number of link levels to recurse.")
+    verbose := flag.Bool("v", false, "Print verbose output")
     flag.Parse()
 
     
     fmt.Println("Parsing Site.")
     pages := bfs(*urlFlag, *maxDepth)
     fmt.Println("Parsed.")
-//    for _, page := range pages {
-//        fmt.Println(page)
-//    }
+
     fmt.Println("Creating Map...")
-    map1 := levels(pages, *urlFlag)
-	cmd := exec.Command("echo", "digraph site {\nrankdir=LR;\nsize=100\nlayout=sfdp\noverlap=prism\nbeautify=true\nsmoothing=triangle\nquadtree=fast\npack=false")
+    map1 := levels(pages)
+
+    // Create .dot file output
+	cmd := exec.Command("echo", "digraph site {\nrankdir=LR;\nsize=100\nlayout=sfdp\noverlap=prism\n#beautify=true\n#smoothing=triangle\n#quadtree=fast\npack=false")
     file, _ := os.Create("sitemap.dot")
     cmd.Stdout = file
     err := cmd.Run()
 	if err != nil {
 		log.Fatal(err)
 	}
-    noDots := regexp.MustCompile("[#.-]")
+
     loaded := make(map[string]struct{})
     for _, level := range map1 {
+        a := "\"" + defluff(level.Name) + "\""
         for _, child := range level.Children {
-            if _, ok := loaded[fmt.Sprintf("%s-%s", level.Name, child)]; ok {
+
+            b := "\""+ defluff(child) + "\""
+
+            if _, ok := loaded[fmt.Sprintf("%s-%s", a, b)]; ok {
                 continue
             } else {
-                loaded[fmt.Sprintf("%s-%s", level.Name, child)] = struct{}{}
-                str := fmt.Sprintf("%s -> %s;", noDots.ReplaceAllString(level.Name, "_"), noDots.ReplaceAllString(child, "_"))
+                loaded[fmt.Sprintf("%s-%s", a, b)] = struct{}{}
+                str := fmt.Sprintf("%s -> %s;", a, b )
                 cmd := exec.Command("echo", str)
                 cmd.Stdout = file
                 err := cmd.Run()
@@ -67,22 +72,29 @@ func main() {
         log.Fatal(err)
     }
 
-    head1 := strings.Replace(*urlFlag, "https://", "", 1)
+    front := regexp.MustCompile("http(.*)://")
+    head1 := head(front.ReplaceAllString(*urlFlag, ""))
 
-    print(map1[head1], map1, "")
-    //for _, level := range map1 {
-    //    if len(level.Children) != 1 {
-    //        fmt.Println(level.Name)
-    //        for _, child := range level.Children {
-    //            fmt.Println("  "+child)
-    //        }
-    //    }
-    //}
+    if *verbose {
+        print(map1[head1], map1, "")
+    }
 }
 
+func defluff(s string) string {
+    noDots := regexp.MustCompile("[&%=?#.-]")
+    noNum := regexp.MustCompile("^([0-9])")
 
-func levels(pages []string, baseurl string) map[string]level {
-    front := regexp.MustCompile("https://")
+    ret := noDots.ReplaceAllString(s, "_")
+    if noNum.Match([]byte(s)) {
+        ret = "_" + s
+    }
+
+    return ret
+}
+
+// Create site structure from list of all internal site links
+func levels(pages []string) map[string]level {
+    front := regexp.MustCompile("http(.*)://")
     pages = Map(pages, func(url string) string {return front.ReplaceAllString(url, "")})
 
     levels := make(map[string]level)
@@ -109,17 +121,10 @@ func levels(pages []string, baseurl string) map[string]level {
             pages = append(pages, page)
         }
     }
-//    for _, level := range levels {
-//        if len(level.Children) == 0  {
-//            delete(levels, level.Name)
-//        } else {
-//            level.Children = toSet(level.Children)
-//        }
-//    }
     return levels
 }
 
-
+// recursively follow a pages links
 func bfs(urlStr string, maxDepth int) []string {
     seen := make(map[string]struct{})
     var q map[string]struct{}
@@ -149,12 +154,14 @@ func bfs(urlStr string, maxDepth int) []string {
 
 }
 
+// GET a link
 func get(urlStr string) []string {
 
     resp, err := http.Get(urlStr)
     if err != nil {
-        panic(err)
+        return []string{urlStr}
     }
+
     defer resp.Body.Close()
 
     reqUrl := resp.Request.URL
@@ -166,6 +173,7 @@ func get(urlStr string) []string {
     return toSet(filter(hrefs(resp.Body, base), withPrefix(base)))
 }
 
+// Parse HTML for links
 func hrefs(r io.Reader, base string) []string {
     links, _ := htmlParser.Parse(r)
     var ret []string
@@ -180,6 +188,7 @@ func hrefs(r io.Reader, base string) []string {
     return ret
 }
 
+// filter a list of strings by a HOF
 func filter(links []string, valid func(string) bool) []string {
     var ret []string
     for _, link := range links {
@@ -190,10 +199,11 @@ func filter(links []string, valid func(string) bool) []string {
     return ret
 }
 
+// recursivley print the hierarchy of all pages. Still needs work
 func print(head level, dict map[string]level, space string) {
     fmt.Println(space + head.Name)
     for _, child := range head.Children {
-        if child == "" || child == " "{
+        if child == "" || child == " " || child == head.Name {
             continue
         }
         if _, ok := dict[child]; ok {

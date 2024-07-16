@@ -7,6 +7,7 @@ beautify=true
 smoothing=triangle
 quadtree=fast
 pack=false
+acadmemics -> "4-."
 academics -> student_support_services;
 academics -> academic_catalog;
 academics -> centers_and_academy;
