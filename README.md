@@ -1,10 +1,7 @@
 # sitemap
 sitemap is a small project that helps visualize website layouts.
-
 The program scans a specified website and follows all links under the same domain using a DFS. 
-
 After organizing the results, the program outputs a dot file which can be modified and then compiled.
-
 the default url is set to my univeristy, which gives a fairly complex result.
 
 ```
@@ -12,7 +9,7 @@ the default url is set to my univeristy, which gives a fairly complex result.
 ```
 
 To avoid potential bugs, include "https://www" when you specify a url.
-
+Because different sites often link back to the home page, there is the danger of infinite loops. use `-depth` to adjust the throroughness of the DFS seach (default 10).
 Use `-v` to get a hierarchical print of all the pages and their children.
 
 
@@ -33,9 +30,9 @@ I enjoyed learning about the go programming languages and practicing some more c
 
 ![myave_sitemap](example/myave.svg)
 
-```./sitemap -url="https://www.avemaria.edu"```
+```./sitemap -url="https://www.avemaria.edu" -depth=10```
 
-![fhi_sitemap](example/ave.svg)
+![fhi_sitemap](example/ave.png)
 
 ## Fixes
 

@@ -159,7 +159,7 @@ func get(urlStr string) []string {
 
     resp, err := http.Get(urlStr)
     if err != nil {
-        return []string{urlStr}
+        return []string{}
     }
 
     defer resp.Body.Close()
