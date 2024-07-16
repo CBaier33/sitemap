@@ -5,7 +5,7 @@ After organizing the results, the program outputs a dot file which can be modifi
 the default url is set to my univeristy, which gives a fairly complex result.
 
 ```
-./sitemap -url="https://www.avemaria.edu"
+./sitemap -url="https://www.my.avemaria.edu"
 ```
 
 To avoid potential bugs, include "https://www" when you specify a url.
