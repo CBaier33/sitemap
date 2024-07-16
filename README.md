@@ -36,4 +36,4 @@ I enjoyed learning about the go programming languages and practicing some more c
 
 ## Fixes
 
-There are many things that need to be fixed, including a more powerful GET request function that handles exceptions and accounting for things like subdomains.
+There are many things that need to be fixed, including a more powerful GET request function that handles exceptions and frameworks that obfuscate the DOM and accounting for things like subdomains.
