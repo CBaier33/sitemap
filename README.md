@@ -33,7 +33,7 @@ I enjoyed learning about the go programming languages and practicing some more c
 
 ![myave_sitemap](example/myave.png)
 
-```./sitemap -url="https://federatedhermes.com"```
+```./sitemap -url="https://www.federatedhermes.com"```
 
 ![fhi_sitemap](example/fhi.png)
 
