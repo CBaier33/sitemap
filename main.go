@@ -46,10 +46,10 @@ func main() {
 
     loaded := make(map[string]struct{})
     for _, level := range map1 {
-        a := "\"" + defluff(level.Name) + "\""
+        a := "\"" + level.Name + "\""
         for _, child := range level.Children {
 
-            b := "\""+ defluff(child) + "\""
+            b := "\""+ child + "\""
 
             if _, ok := loaded[fmt.Sprintf("%s-%s", a, b)]; ok {
                 continue
@@ -80,17 +80,17 @@ func main() {
     }
 }
 
-func defluff(s string) string {
-    noDots := regexp.MustCompile("[&%=?#.-]")
-    noNum := regexp.MustCompile("^([0-9])")
-
-    ret := noDots.ReplaceAllString(s, "_")
-    if noNum.Match([]byte(s)) {
-        ret = "_" + s
-    }
-
-    return ret
-}
+//func defluff(s string) string {
+//    noDots := regexp.MustCompile("[&%=?#.-]")
+//    noNum := regexp.MustCompile("^([0-9])")
+//
+//    ret := noDots.ReplaceAllString(s, "_")
+//    if noNum.Match([]byte(s)) {
+//        ret = "_" + s
+//    }
+//
+//    return ret
+//}
 
 // Create site structure from list of all internal site links
 func levels(pages []string) map[string]level {
@@ -124,7 +124,7 @@ func levels(pages []string) map[string]level {
     return levels
 }
 
-// recursively follow a pages links
+// recursively follow a page's links
 func bfs(urlStr string, maxDepth int) []string {
     seen := make(map[string]struct{})
     var q map[string]struct{}

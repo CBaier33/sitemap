@@ -31,11 +31,11 @@ I enjoyed learning about the go programming languages and practicing some more c
 
 ```./sitemap -url="https://www.my.avemaria.edu"```
 
-![myave_sitemap](example/myave.png)
+![myave_sitemap](example/myave.svg)
 
-```./sitemap -url="https://www.federatedhermes.com"```
+```./sitemap -url="https://www.avemaria.edu"```
 
-![fhi_sitemap](example/fhi.png)
+![fhi_sitemap](example/ave.svg)
 
 ## Fixes
 
