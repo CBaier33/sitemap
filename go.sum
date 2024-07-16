@@ -1,0 +1,4 @@
+github.com/CBaier33/html-parser v0.0.0-20240707232618-665e2052c07d h1:+5bwDQIF0shBXuOJGg5aUlNKO85kvQBbV2kVhNzAhTo=
+github.com/CBaier33/html-parser v0.0.0-20240707232618-665e2052c07d/go.mod h1:rw21inLjf5N5o/WddZmvvc+6XEZYiye0zjbt914tsq4=
+golang.org/x/net v0.27.0 h1:5K3Njcw06/l2y9vpGCSdcxWOYHOUk3dVNGDXN+FvAys=
+golang.org/x/net v0.27.0/go.mod h1:dDi0PyhWNoiUOrAS8uXv/vnScO4wnHQO4mj9fn/RytE=
