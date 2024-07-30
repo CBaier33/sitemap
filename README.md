@@ -36,14 +36,15 @@ I enjoyed learning about the go programming languages and practicing some more c
 
 ## Installation
 
-The repo has a file that is already built for linux, you will need to follow the command in 'exe.txt' to build for Windows.
-
 Clone this repository and add the executable to your PATH.
+
+The repo has a file that is already built for linux, you will need to follow the command in 'exe.txt' to build for Windows.
 
 To add to your `.bashrc`, add the following line:
 ```
 export PATH=$PATH:full/path/to/sitemap/
 ```
+Then, source your `.bashrc` file.
 
 ## Fixes
 
