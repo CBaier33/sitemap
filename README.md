@@ -1,11 +1,11 @@
 # sitemap
 sitemap is a small project that helps visualize website layouts.
-The program scans a specified website and follows all links under the same domain using a DFS. 
+The program scans a specified website and follows all links under the same domain using a BFS. 
 After organizing the results, the program outputs a dot file which can be modified and then compiled.
 the default url is set to my univeristy, which gives a fairly complex result.
 
 ```
-./sitemap -url="https://www.my.avemaria.edu"
+sitemap -url="https://www.my.avemaria.edu"
 ```
 
 To avoid potential bugs, include "https://www" when you specify a url.
@@ -26,13 +26,24 @@ I enjoyed learning about the go programming languages and practicing some more c
 
 ## Example
 
-```./sitemap -url="https://www.my.avemaria.edu"```
+```sitemap -url="https://www.my.avemaria.edu"```
 
 ![myave_sitemap](example/myave.svg)
 
-```./sitemap -url="https://www.acm.org" -depth=2```
+```sitemap -url="https://www.acm.org" -depth=2```
 
 ![fhi_sitemap](example/acm.png)
+
+## Installation
+
+The repo has a file that is already built for linux, you will need to follow the command in 'exe.txt' to build for Windows.
+
+Clone this repository and add the executable to your PATH.
+
+To add to your `.bashrc`, add the following line:
+```
+export PATH=$PATH:full/path/to/sitemap/
+```
 
 ## Fixes
 
